@@ -53,23 +53,33 @@ public class LinkedinLoginTest
 
     //Negative cases
 
+
+
+
+
     //Case1
         loginField.sendKeys("scheh@adyax.com");
         passwordField.clear();
         okButton.click();
 
-        Assert.assertTrue(loginField.isDisplayed());
-        Assert.assertTrue(passwordField.isDisplayed());
-        Assert.assertTrue(okButton.isDisplayed());
+        Assert.assertTrue(loginField.isDisplayed(),
+                "Login field is absent");
+        Assert.assertTrue(passwordField.isDisplayed(),
+                "Password field is absent");
+        Assert.assertTrue(okButton.isDisplayed(),
+                "Ok button is absent");
 
     //Case2
         loginField.clear();
         passwordField.sendKeys("Password");
         okButton.click();
 
-        Assert.assertTrue(loginField.isDisplayed());
-        Assert.assertTrue(passwordField.isDisplayed());
-        Assert.assertTrue(okButton.isDisplayed());
+        Assert.assertTrue(loginField.isDisplayed(),
+                "Login field is absent");
+        Assert.assertTrue(passwordField.isDisplayed(),
+                "Password field is absent");
+        Assert.assertTrue(okButton.isDisplayed(),
+                "Login button is absent");
 
     //Case3
         loginField.sendKeys("schehschehscheh");
@@ -112,8 +122,8 @@ public class LinkedinLoginTest
 
         sleep(5000);
 
-
-        Assert.assertTrue(errorMessage1.isDisplayed(),
+        WebElement errorMessage3 = webDriver.findElement(By.xpath("//strong"));
+        Assert.assertTrue(errorMessage3.isDisplayed(),
                 "Error message is absent");
 
         Assert.assertEquals(errorText1.getText(),
@@ -158,6 +168,7 @@ public class LinkedinLoginTest
         Assert.assertEquals(errorText2.getText(),
                 "Укажите действительный адрес эл. почты.",
                 "Error message is wrong");
+
 
     //Log in process
         loginField.sendKeys("sths@ukr.net");
