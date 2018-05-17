@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static java.lang.Thread.sleep;
@@ -11,54 +13,128 @@ import static org.testng.Assert.assertEquals;
 
 public class LinkedinLoginTest
 {
+    WebDriver webDriver;
+
+    @BeforeMethod
+    public void before()
+    {
+        webDriver = new FirefoxDriver();
+        webDriver.manage().window().maximize();
+        webDriver.get("https://www.linkedin.com/");
+    }
+
     @Test
     public void successfulLoginTest() throws InterruptedException
     {
-        WebDriver webDriver = new FirefoxDriver();
-        webDriver.get("https://www.linkedin.com/");
+        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
+        //Assert.assertEquals("a","b", "Probably 'a' is not equal to 'b'");
+        Assert.assertTrue(linkedinLoginPage.isSignInButtonDisplayed(),
+                "Sign is button is not displayed");
 
-    //Assert.assertEquals("a","b", "Probably 'a' is not equal to 'b'");
+        linkedinLoginPage.login("scheh@adyax.com", "Password0123");
+        LinkedinHomePage linkedinHomePage = new LinkedinHomePage(webDriver);
 
-    String actualLoginPageTitle = webDriver.getTitle();
+        //Assert for title
+        Assert.assertEquals(linkedinHomePage.getCurrentURL(),
+                "https://www.linkedin.com/feed/",
+                "Home page URL is wrong");
 
-    //Assert for title
-        assertEquals(webDriver.getTitle(),
-                "LinkedIn: Log In or Sign Up",
-                "Login page Title is wrong");
+        Assert.assertTrue(linkedinHomePage.getCurrentTitle().contains("LinkedIn"),
+                "Home page title is wrong.");
 
-    //Assert for URL
-        //String URL = webDriver.getCurrentUrl();
-        //Assert.assertEquals(URL,
-                //"https://www.linkedin.com/",
-                //"Wrong URL");
 
-        assertEquals(webDriver.getCurrentUrl(),
-            "https://www.linkedin.com/",
-            "Incorrect URL");
+        //To refact!!!
 
-    //Assert for login field presence
+        //Assert for login field presence
         WebElement loginField = webDriver.findElement(By.xpath("//input[@class='login-email']"));
         Assert.assertTrue(loginField.isDisplayed(),
                 "Login field is absent");
 
-    //Assert for password field presence
+        //Assert for password field presence
         WebElement passwordField = webDriver.findElement(By.xpath("//input[@class='login-password']"));
         Assert.assertTrue(passwordField.isDisplayed(),
                 "Password field is absent");
 
-    //Assert for OK button presence
-        WebElement okButton = webDriver.findElement(By.xpath("//input[@class='login submit-button']"));
-        Assert.assertTrue(okButton.isDisplayed(),
-                "OK button is absent");
+    }
 
+    @Test
+    public void negativeLoginTest() throws InterruptedException
+    {
+        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
+
+        assertEquals(webDriver.getTitle(),
+                "LinkedIn: Log In or Sign Up",
+                "Login page Title is wrong");
+
+        linkedinLoginPage.isSignInButtonDisplayed();
+        linkedinLoginPage.login("schehadyax", "Password0");
+
+
+        sleep(3000);
+
+        String currentPageURL = webDriver.getCurrentUrl();
+        String currentPageTitle = webDriver.getTitle();
+
+        Assert.assertEquals(currentPageURL,
+                "https://www.linkedin.com/uas/login-submit",
+                "Login-Submit page URL submit is wrong");
+
+        Assert.assertEquals(currentPageTitle,
+                "Войти в LinkedIn",
+                "Login-Submit page Title is wrong");
+
+        WebElement errorMessage = webDriver.findElement(By.xpath("//div[@role='alert']"));
+        Assert.assertEquals(errorMessage.getText(),
+                "При заполнении формы были допущены ошибки. Проверьте и исправьте отмеченные поля.",
+                "Wrong error message text displayed.");
+
+    }
+    @Test
+    public void negativeLoginTest1() throws InterruptedException
+    {
+        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
+        linkedinLoginPage.isSignInButtonDisplayed();
+        linkedinLoginPage.login("scheh@adyax.com", "Password0123");
+
+        sleep(3000);
+
+        String currentPageURL = webDriver.getCurrentUrl();
+        String currentPageTitle = webDriver.getTitle();
+
+        Assert.assertEquals(currentPageURL,
+                "https://www.linkedin.com/feed/",
+                "Login-Submit page URL submit is wrong");
+
+        Assert.assertEquals(currentPageTitle,
+                "LinkedIn",
+                "Login-Submit page Title is wrong");
+
+
+        //Assert for login field presence
+        WebElement loginField = webDriver.findElement(By.xpath("//input[@class='login-email']"));
+        Assert.assertTrue(loginField.isDisplayed(),
+                "Login field is absent");
+
+        //Assert for password field presence
+        WebElement passwordField = webDriver.findElement(By.xpath("//input[@class='login-password']"));
+        Assert.assertTrue(passwordField.isDisplayed(),
+                "Password field is absent");
+
+    }
+
+    @AfterMethod
+    public void after()
+    {
+        webDriver.close();
+    }
+
+
+}
+    // @Test
+    //public void passwordIsAbsent()
+    //{
     //Negative cases
-
-
-
-
-
-    //Case1
-        loginField.sendKeys("scheh@adyax.com");
+    /*    loginField.sendKeys("scheh@adyax.com");
         passwordField.clear();
         okButton.click();
 
@@ -120,7 +196,7 @@ public class LinkedinLoginTest
         passField.sendKeys("123456");
         signInButton.click();
 
-        sleep(5000);
+        sleep(3000);
 
         WebElement errorMessage3 = webDriver.findElement(By.xpath("//strong"));
         Assert.assertTrue(errorMessage3.isDisplayed(),
@@ -218,4 +294,4 @@ public class LinkedinLoginTest
     }
 
 
-}
+}*/
