@@ -2,18 +2,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-
-public class LinkedinLoginPage
+public class LinkedinLoginPage extends LinkedinBasePage
 {
-    private  WebDriver webDriver;
-
     private WebElement emailField;
     private WebElement passwordField;
     private WebElement signInButton;
 
     public LinkedinLoginPage(WebDriver webDriver)
     {
-        this.webDriver = webDriver;
+        super(webDriver);
         initElements();
     }
 

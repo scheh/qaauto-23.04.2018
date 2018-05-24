@@ -1,25 +1,21 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import java.awt.*;
 
-public class LinkedinHomePage
+public class LinkedinHomePage extends LinkedinBasePage
 {
-    private WebDriver webDriver;
-
+    public LinkedinHomePage(WebDriver webDriver)
+    {
+        super(webDriver);
+        initHomeElement();
+    }
     private WebElement homePageIcon;
     private WebElement myNetworkIcon;
     private WebElement jobsIcon;
     private WebElement messagingIcon;
     private WebElement notificationsIcon;
     private WebElement searchField;
-
-    public LinkedinHomePage(WebDriver webDriver)
-    {
-        this.webDriver = webDriver;
-        initHomeElement();
-    }
 
     public void initHomeElement()
     {
@@ -30,7 +26,6 @@ public class LinkedinHomePage
         notificationsIcon = webDriver.findElement(By.id("notifications-tab-icon"));
         searchField = webDriver.findElement(By.id("nav-search-controls-wormhole"));
     }
-
 
     public String getCurrentURLHomePage()
     {

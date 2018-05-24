@@ -3,6 +3,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static java.lang.Thread.sleep;
@@ -19,9 +20,66 @@ public class LinkedinLoginTest
         webDriver.get("https://www.linkedin.com/");
     }
 
+    @DataProvider
+    public Object[][] validDataProvider()
+    {
+        return new Object[][]
+        {
+                { "scheh@adyax.com", "Password0123" },
+                { "SCHEH@ADYAX.COM", "Password0123" },
 
-    @Test
-    public void successfulLoginTest()
+        };
+    }
+
+    @DataProvider
+    public Object[][] invalidDataProviderIncorrectEmail()
+    {
+        return new Object[][]
+        {
+                {"schehadyaxcom", "Password"},
+                {"SCH4534 *92459", "Password0123"},
+                {"* 6745%^^7$$#_+", "&764yfhfifj"},
+        };
+
+    }
+    @DataProvider
+    public Object[][] invalidDataProviderUnregisteredEmail()
+    {
+        return new Object[][]
+        {
+                {"s@adyax.com", "Password"},
+                {"cheh@adyax.com", "Passs"},
+                {"233@i.ua", "Passwordeer"},
+                {"come@bigmir.net", "Oofjnfnff"}
+
+        };
+    }
+    @DataProvider
+    public Object[][] invalidDataProviderPassword()
+    {
+        return new Object[][]
+        {
+                {"scheh@adyax.com", "Passsswwwo"},
+                {"scheh@adyax.com", "Prjhfjfjff"},
+                {"scheh@adyax.com", "478ifhjkfh"},
+        };
+    }
+    @DataProvider
+    public Object[][] emptyDataForEachField()
+    {
+        return new Object[][]
+        {
+                {"scheh@adyax.com", ""},
+                {"", "Password0123"},
+                {"", ""},
+                {" ", " "},
+        };
+
+    }
+
+
+    @Test(dataProvider = "validDataProvider")
+    public void successfulLoginTest(String email, String password)
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
 
@@ -42,7 +100,7 @@ public class LinkedinLoginTest
                 "https://www.linkedin.com/",
                 "Login page title is wrong");
 
-        linkedinLoginPage.login("scheh@adyax.com", "Password0123");
+        linkedinLoginPage.login(email, password);
         LinkedinHomePage linkedinHomePage = new LinkedinHomePage(webDriver);
 
         Assert.assertEquals(linkedinHomePage.getCurrentURLHomePage(),
@@ -72,8 +130,8 @@ public class LinkedinLoginTest
 
     }
 
-    @Test
-    public void negativeLoginTestIncorrectLogin() throws InterruptedException
+    @Test(dataProvider = "invalidDataProviderIncorrectEmail")
+    public void negativeLoginTestIncorrectLogin(String email, String password) throws InterruptedException
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
 
@@ -86,7 +144,7 @@ public class LinkedinLoginTest
         Assert.assertTrue(linkedinLoginPage.isSignInButtonDisplayed(),
                 "Sign is button is absent");
 
-        linkedinLoginPage.login("schehadyax", "Password0123");
+        linkedinLoginPage.login(email,password);
 
         sleep(3000);
 
@@ -98,9 +156,13 @@ public class LinkedinLoginTest
         Assert.assertTrue(linkedinSubmitLoginPage.invalidLoginTextSubmitPage(),
                 "Error message is absent");
 
-        Assert.assertEquals(linkedinSubmitLoginPage.errorTextSubmitPage(),
+        Assert.assertEquals(linkedinSubmitLoginPage.getErrorTextSubmitPage(),
                 "При заполнении формы были допущены ошибки. Проверьте и исправьте отмеченные поля.",
                 "Wrong error message text displayed.");
+
+        Assert.assertEquals(linkedinSubmitLoginPage.unRegisteredEmail(),
+                "Укажите действительный адрес эл. почты.",
+                "Error message is wrong");
 
         Assert.assertTrue(linkedinSubmitLoginPage.emailFieldSubmitPage(),
                 "Email field is absent");
@@ -114,11 +176,11 @@ public class LinkedinLoginTest
 
     }
 
-    @Test
-    public void negativeLoginTestInvalidLogin() throws InterruptedException
+    @Test(dataProvider = "invalidDataProviderUnregisteredEmail")
+    public void negativeLoginTestInvalidLogin(String email, String password) throws InterruptedException
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
-        linkedinLoginPage.login("s@adyax.com", "Password0123");
+        linkedinLoginPage.login(email, password);
 
         sleep(2000);
 
@@ -130,7 +192,7 @@ public class LinkedinLoginTest
         Assert.assertTrue(linkedinSubmitLoginPage.invalidLoginTextSubmitPage(),
                 "Error message for incorrect login is absent");
 
-        Assert.assertEquals(linkedinSubmitLoginPage.errorTextSubmitPage(),
+        Assert.assertEquals(linkedinSubmitLoginPage.getErrorTextSubmitPage(),
                 "При заполнении формы были допущены ошибки. Проверьте и исправьте отмеченные поля.",
                 "Wrong error message text displayed.");
 
@@ -151,13 +213,13 @@ public class LinkedinLoginTest
 
     }
 
-    @Test
-    public void negativeLoginTestNonRegisteredEmail() throws InterruptedException
+    @Test(dataProvider = "invalidDataProviderUnregisteredEmail")
+    public void negativeLoginTestNonRegisteredEmail(String email, String password) throws InterruptedException
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
-        linkedinLoginPage.login("s@adyax.com", "Password0123");
+        linkedinLoginPage.login(email, password);
 
-        sleep(2000);
+        sleep(3000);
 
         LinkedinSubmitLoginPage linkedinSubmitLoginPage = new LinkedinSubmitLoginPage(webDriver);
 
@@ -170,7 +232,7 @@ public class LinkedinLoginTest
         Assert.assertTrue(linkedinSubmitLoginPage.invalidLoginTextSubmitPage(),
                 "Error message for incorrect login is absent");
 
-        Assert.assertEquals(linkedinSubmitLoginPage.errorTextSubmitPage(),
+        Assert.assertEquals(linkedinSubmitLoginPage.getErrorTextSubmitPage(),
                 "При заполнении формы были допущены ошибки. Проверьте и исправьте отмеченные поля.",
                 "Wrong error message text displayed.");
 
@@ -186,11 +248,11 @@ public class LinkedinLoginTest
 
     }
 
-    @Test
-    public void negativeLoginTestIncorrectPassword() throws InterruptedException
+    @Test(dataProvider = "invalidDataProviderPassword")
+    public void negativeLoginTestIncorrectPassword(String email, String password) throws InterruptedException
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
-        linkedinLoginPage.login("scheh@adyax.com", "Password");
+        linkedinLoginPage.login(email, password);
 
         sleep(2000);
 
@@ -205,7 +267,7 @@ public class LinkedinLoginTest
         Assert.assertTrue(linkedinSubmitLoginPage.invalidPasswordSubmitPage(),
                 "Error message for incorrect login is absent");
 
-        Assert.assertEquals(linkedinSubmitLoginPage.errorTextSubmitPage(),
+        Assert.assertEquals(linkedinSubmitLoginPage.getErrorTextSubmitPage(),
                 "При заполнении формы были допущены ошибки. Проверьте и исправьте отмеченные поля.",
                 "Wrong error message text displayed.");
 
@@ -224,48 +286,12 @@ public class LinkedinLoginTest
 
     }
 
-    @Test
-    public void BothFieldsAreEmpty()
+    @Test(dataProvider = "emptyDataForEachField")
+    public void OneOrBothFieldsAreEmpty(String email, String password)
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
 
-        linkedinLoginPage.login("", "");
-
-        Assert.assertTrue(linkedinLoginPage.isEmailFieldDisplayed(),
-                "Email field is absent");
-
-        Assert.assertTrue(linkedinLoginPage.isPasswordFieldDisplayed(),
-                "Password field is absent");
-
-        Assert.assertTrue(linkedinLoginPage.isSignInButtonDisplayed(),
-                "Sign is button is absent");
-
-    }
-
-    @Test
-    public void emailFieldIsEmpty()
-    {
-        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
-
-        linkedinLoginPage.login("", "Password0123");
-
-        Assert.assertTrue(linkedinLoginPage.isEmailFieldDisplayed(),
-                "Email field is absent");
-
-        Assert.assertTrue(linkedinLoginPage.isPasswordFieldDisplayed(),
-                "Password field is absent");
-
-        Assert.assertTrue(linkedinLoginPage.isSignInButtonDisplayed(),
-                "Sign is button is absent");
-
-    }
-
-    @Test
-    public void passwordFieldIsEmpty()
-    {
-        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
-
-        linkedinLoginPage.login("scheh@adyax.com", "");
+        linkedinLoginPage.login(email,password);
 
         Assert.assertTrue(linkedinLoginPage.isEmailFieldDisplayed(),
                 "Email field is absent");

@@ -2,10 +2,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class LinkedinSubmitLoginPage
+public class LinkedinSubmitLoginPage extends LinkedinBasePage
 {
-        private WebDriver webDriver;
-
         private WebElement errorBlock;
         private WebElement errorMessage;
         private WebElement invalidLoginText;
@@ -17,7 +15,7 @@ public class LinkedinSubmitLoginPage
 
     public LinkedinSubmitLoginPage(WebDriver webDriver)
     {
-        this.webDriver = webDriver;
+        super(webDriver);
         initElements();
     }
 
@@ -48,7 +46,7 @@ public class LinkedinSubmitLoginPage
         return errorBlock.isDisplayed();
     }
 
-    public String errorTextSubmitPage()
+    public String getErrorTextSubmitPage()
     {
         return errorMessage.getText();
     }
