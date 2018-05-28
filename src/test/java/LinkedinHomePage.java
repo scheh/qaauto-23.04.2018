@@ -8,11 +8,6 @@ import java.awt.*;
 
 public class LinkedinHomePage extends LinkedinBasePage
 {
-    public LinkedinHomePage(WebDriver webDriver)
-    {
-        super(webDriver);
-        PageFactory.initElements(webDriver, this);
-    }
     @FindBy(id = "feed-tab-icon")
     private WebElement homePageIcon;
 
@@ -31,7 +26,14 @@ public class LinkedinHomePage extends LinkedinBasePage
     @FindBy(id = "nav-search-controls-wormhole")
     private WebElement searchField;
 
-        public String getCurrentURLHomePage()
+    public LinkedinHomePage(WebDriver webDriver)
+    {
+        super(webDriver);
+        PageFactory.initElements(webDriver, this);
+    }
+
+
+    public String getCurrentURLHomePage()
     {
         return webDriver.getCurrentUrl();
     }

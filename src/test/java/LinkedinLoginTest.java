@@ -48,9 +48,9 @@ public class LinkedinLoginTest
         return new Object[][]
         {
                 {"s@adyax.com", "Password"},
-                {"cheh@adyax.com", "Passs"},
+                {"cheh@adyax.com", "Passs999"},
                 {"233@i.ua", "Passwordeer"},
-                {"come@bigmir.net", "Oofjnfnff"}
+                {"come@bigmir.net", "Oofjnfnff"},
 
         };
     }
@@ -79,7 +79,7 @@ public class LinkedinLoginTest
 
 
     @Test(dataProvider = "validDataProvider")
-    public void successfulLoginTest(String email, String password)
+    public void successfulLoginTest(String email, String password) throws InterruptedException
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
 
@@ -102,8 +102,8 @@ public class LinkedinLoginTest
 
 
         LinkedinHomePage linkedinHomePage = linkedinLoginPage.login(email, password);
-        //LinkedinHomePage linkedinHomePage = new LinkedinHomePage(webDriver);
 
+        sleep(2000);
 
         Assert.assertEquals(linkedinHomePage.getCurrentURLHomePage(),
                 "https://www.linkedin.com/feed/",
@@ -129,6 +129,7 @@ public class LinkedinLoginTest
 
         Assert.assertTrue(linkedinHomePage.isSearchFieldisPresent(),
                 "Search field is not displayed");
+
 
     }
 
@@ -180,11 +181,10 @@ public class LinkedinLoginTest
     public void negativeLoginTestInvalidLogin(String email, String password) throws InterruptedException
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
-        linkedinLoginPage.login(email, password);
+
+        LinkedinSubmitLoginPage linkedinSubmitLoginPage = linkedinLoginPage.submitPageLogin(email,password);
 
         sleep(2000);
-
-        LinkedinSubmitLoginPage linkedinSubmitLoginPage = new LinkedinSubmitLoginPage(webDriver);
 
         Assert.assertTrue(linkedinSubmitLoginPage.errorBlockSubmitPage(),
                 "Error message block is absent");
@@ -210,18 +210,16 @@ public class LinkedinLoginTest
                 "Submit button is absent");
 
 
-
     }
 
     @Test(dataProvider = "invalidUnregisteredEmailDataProvider")
     public void negativeLoginTestNonRegisteredEmail(String email, String password) throws InterruptedException
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
-        linkedinLoginPage.login(email, password);
+
+        LinkedinSubmitLoginPage linkedinSubmitLoginPage = linkedinLoginPage.submitPageLogin(email,password);
 
         sleep(3000);
-
-        LinkedinSubmitLoginPage linkedinSubmitLoginPage = new LinkedinSubmitLoginPage(webDriver);
 
         Assert.assertTrue(linkedinSubmitLoginPage.errorBlockSubmitPage(),
                 "Error message block is absent");
@@ -252,11 +250,10 @@ public class LinkedinLoginTest
     public void negativeLoginTestIncorrectPassword(String email, String password) throws InterruptedException
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
-        linkedinLoginPage.login(email, password);
 
         sleep(2000);
 
-        LinkedinSubmitLoginPage linkedinSubmitLoginPage = new LinkedinSubmitLoginPage(webDriver);
+        LinkedinSubmitLoginPage linkedinSubmitLoginPage = linkedinLoginPage.submitPageLogin(email,password);
 
         Assert.assertTrue(linkedinSubmitLoginPage.errorBlockSubmitPage(),
                 "Error message block is absent");

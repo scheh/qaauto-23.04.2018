@@ -37,6 +37,7 @@ public class LinkedinLoginPage extends LinkedinBasePage
         return PageFactory.initElements(webDriver, LinkedinSubmitLoginPage.class);
     }
 
+
     public boolean isEmailFieldDisplayed()
     {
         return emailField.isDisplayed();

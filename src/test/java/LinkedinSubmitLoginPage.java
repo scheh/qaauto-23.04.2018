@@ -6,12 +6,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LinkedinSubmitLoginPage extends LinkedinBasePage
 {
-    public LinkedinSubmitLoginPage(WebDriver webDriver)
-    {
-        super(webDriver);
-        PageFactory.initElements(webDriver, this);
-    }
-
     @FindBy(id = "global-alert-queue")
     private WebElement errorBlock;
 
@@ -34,6 +28,11 @@ public class LinkedinSubmitLoginPage extends LinkedinBasePage
     private WebElement submitButton;
 
 
+    public LinkedinSubmitLoginPage(WebDriver webDriver)
+    {
+        super(webDriver);
+        PageFactory.initElements(webDriver, this);
+    }
 
     public String getURLSubmitPage()
     {
