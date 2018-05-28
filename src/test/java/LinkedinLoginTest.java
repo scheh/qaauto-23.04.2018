@@ -32,7 +32,7 @@ public class LinkedinLoginTest
     }
 
     @DataProvider
-    public Object[][] invalidDataProviderIncorrectEmail()
+    public Object[][] invalidIncorrectEmailDataProvider()
     {
         return new Object[][]
         {
@@ -43,7 +43,7 @@ public class LinkedinLoginTest
 
     }
     @DataProvider
-    public Object[][] invalidDataProviderUnregisteredEmail()
+    public Object[][] invalidUnregisteredEmailDataProvider()
     {
         return new Object[][]
         {
@@ -55,7 +55,7 @@ public class LinkedinLoginTest
         };
     }
     @DataProvider
-    public Object[][] invalidDataProviderPassword()
+    public Object[][] invalidPasswordDataProvider()
     {
         return new Object[][]
         {
@@ -65,7 +65,7 @@ public class LinkedinLoginTest
         };
     }
     @DataProvider
-    public Object[][] emptyDataForEachField()
+    public Object[][] emptyDataForEachFieldDataProvider()
     {
         return new Object[][]
         {
@@ -100,8 +100,10 @@ public class LinkedinLoginTest
                 "https://www.linkedin.com/",
                 "Login page title is wrong");
 
-        linkedinLoginPage.login(email, password);
-        LinkedinHomePage linkedinHomePage = new LinkedinHomePage(webDriver);
+
+        LinkedinHomePage linkedinHomePage = linkedinLoginPage.login(email, password);
+        //LinkedinHomePage linkedinHomePage = new LinkedinHomePage(webDriver);
+
 
         Assert.assertEquals(linkedinHomePage.getCurrentURLHomePage(),
                 "https://www.linkedin.com/feed/",
@@ -130,7 +132,7 @@ public class LinkedinLoginTest
 
     }
 
-    @Test(dataProvider = "invalidDataProviderIncorrectEmail")
+    @Test(dataProvider = "invalidIncorrectEmailDataProvider")
     public void negativeLoginTestIncorrectLogin(String email, String password) throws InterruptedException
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
@@ -144,11 +146,9 @@ public class LinkedinLoginTest
         Assert.assertTrue(linkedinLoginPage.isSignInButtonDisplayed(),
                 "Sign is button is absent");
 
-        linkedinLoginPage.login(email,password);
+        LinkedinSubmitLoginPage linkedinSubmitLoginPage = linkedinLoginPage.submitPageLogin(email,password);
 
         sleep(3000);
-
-        LinkedinSubmitLoginPage linkedinSubmitLoginPage = new LinkedinSubmitLoginPage(webDriver);
 
         Assert.assertTrue(linkedinSubmitLoginPage.errorBlockSubmitPage(),
                 "Error block is absent");
@@ -176,7 +176,7 @@ public class LinkedinLoginTest
 
     }
 
-    @Test(dataProvider = "invalidDataProviderUnregisteredEmail")
+    @Test(dataProvider = "invalidUnregisteredEmailDataProvider")
     public void negativeLoginTestInvalidLogin(String email, String password) throws InterruptedException
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
@@ -213,7 +213,7 @@ public class LinkedinLoginTest
 
     }
 
-    @Test(dataProvider = "invalidDataProviderUnregisteredEmail")
+    @Test(dataProvider = "invalidUnregisteredEmailDataProvider")
     public void negativeLoginTestNonRegisteredEmail(String email, String password) throws InterruptedException
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
@@ -248,7 +248,7 @@ public class LinkedinLoginTest
 
     }
 
-    @Test(dataProvider = "invalidDataProviderPassword")
+    @Test(dataProvider = "invalidPasswordDataProvider")
     public void negativeLoginTestIncorrectPassword(String email, String password) throws InterruptedException
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
@@ -286,7 +286,7 @@ public class LinkedinLoginTest
 
     }
 
-    @Test(dataProvider = "emptyDataForEachField")
+    @Test(dataProvider = "emptyDataForEachFieldDataProvider")
     public void OneOrBothFieldsAreEmpty(String email, String password)
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);

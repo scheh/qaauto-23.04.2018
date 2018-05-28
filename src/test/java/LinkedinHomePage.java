@@ -1,6 +1,9 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
 import java.awt.*;
 
 public class LinkedinHomePage extends LinkedinBasePage
@@ -8,26 +11,27 @@ public class LinkedinHomePage extends LinkedinBasePage
     public LinkedinHomePage(WebDriver webDriver)
     {
         super(webDriver);
-        initHomeElement();
+        PageFactory.initElements(webDriver, this);
     }
+    @FindBy(id = "feed-tab-icon")
     private WebElement homePageIcon;
+
+    @FindBy(id = "mynetwork-tab-icon")
     private WebElement myNetworkIcon;
+
+    @FindBy(id = "jobs-tab-icon")
     private WebElement jobsIcon;
+
+    @FindBy(id = "messaging-tab-icon")
     private WebElement messagingIcon;
+
+    @FindBy(id = "notifications-tab-icon")
     private WebElement notificationsIcon;
+
+    @FindBy(id = "nav-search-controls-wormhole")
     private WebElement searchField;
 
-    public void initHomeElement()
-    {
-        homePageIcon = webDriver.findElement(By.id("feed-tab-icon"));
-        myNetworkIcon =  webDriver.findElement(By.id("mynetwork-tab-icon"));
-        jobsIcon = webDriver.findElement(By.id("jobs-tab-icon"));
-        messagingIcon = webDriver.findElement(By.id("messaging-tab-icon"));
-        notificationsIcon = webDriver.findElement(By.id("notifications-tab-icon"));
-        searchField = webDriver.findElement(By.id("nav-search-controls-wormhole"));
-    }
-
-    public String getCurrentURLHomePage()
+        public String getCurrentURLHomePage()
     {
         return webDriver.getCurrentUrl();
     }
