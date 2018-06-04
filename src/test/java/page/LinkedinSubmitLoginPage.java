@@ -1,8 +1,8 @@
-import org.openqa.selenium.By;
+package page;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 public class LinkedinSubmitLoginPage extends LinkedinBasePage
 {
@@ -31,7 +31,7 @@ public class LinkedinSubmitLoginPage extends LinkedinBasePage
     public LinkedinSubmitLoginPage(WebDriver webDriver)
     {
         super(webDriver);
-        PageFactory.initElements(webDriver, this);
+        //PageFactory.initElements(webDriver, this);
     }
 
     public String getURLSubmitPage()
@@ -89,4 +89,8 @@ public class LinkedinSubmitLoginPage extends LinkedinBasePage
         return submitButton.isDisplayed();
     }
 
+    boolean isPageLoaded()
+    {
+        return errorBlock.isDisplayed();
+    }
 }

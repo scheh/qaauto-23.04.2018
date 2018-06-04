@@ -1,6 +1,8 @@
+package page;
+
 import org.openqa.selenium.WebDriver;
 
-public class LinkedinBasePage
+public abstract class LinkedinBasePage
 {
     protected WebDriver webDriver;
 
@@ -17,4 +19,9 @@ public class LinkedinBasePage
     public String getCurrentTitleHomePage() {
         return webDriver.getTitle();
     }
+
+    abstract boolean isPageLoaded();
+
+    
+
 }

@@ -1,4 +1,5 @@
-import org.openqa.selenium.By;
+package page;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,10 +16,20 @@ public class LinkedinLoginPage extends LinkedinBasePage
     @FindBy(id = "login-submit")
     private WebElement signInButton;
 
+    @FindBy(className = "link-forgot-password")
+    private WebElement forgotPasswordLink;
+
+
     public LinkedinLoginPage(WebDriver webDriver)
     {
         super(webDriver);
         PageFactory.initElements(webDriver, this);
+    }
+
+    @Override
+    public boolean isPageLoaded()
+    {
+        return signInButton.isDisplayed();
     }
 
     public LinkedinHomePage login(String email, String password)
@@ -27,6 +38,7 @@ public class LinkedinLoginPage extends LinkedinBasePage
         passwordField.sendKeys(password);
         signInButton.click();
         return PageFactory.initElements(webDriver, LinkedinHomePage.class);
+        //return new page.LinkedinHomePage(webDriver);
     }
 
     public LinkedinSubmitLoginPage submitPageLogin(String email, String password)
@@ -35,6 +47,12 @@ public class LinkedinLoginPage extends LinkedinBasePage
         passwordField.sendKeys(password);
         signInButton.click();
         return PageFactory.initElements(webDriver, LinkedinSubmitLoginPage.class);
+    }
+
+    public LinkedinRequestPasswordResetPage clickOnForgotPasswordLink()
+    {
+        forgotPasswordLink.click();
+        return PageFactory.initElements(webDriver, LinkedinRequestPasswordResetPage.class);
     }
 
 
@@ -48,11 +66,6 @@ public class LinkedinLoginPage extends LinkedinBasePage
         return passwordField.isDisplayed();
     }
 
-    public boolean isSignInButtonDisplayed()
-    {
-        return signInButton.isDisplayed();
-    }
-
     public String getCurrentURLLoginPage()
     {
         return webDriver.getCurrentUrl();
@@ -63,4 +76,23 @@ public class LinkedinLoginPage extends LinkedinBasePage
         return webDriver.getCurrentUrl();
     }
 
-}
+
+//    public <T> T login(String email, String password)
+//    {
+//        emailField.sendKeys(email);
+//        passwordField.sendKeys((password));
+//        signInButton.click();
+//        if (getCurrentURLLoginPage().contains("/feed"))
+//        {
+//            return (T) new page.LinkedinHomePage(webDriver);
+//        }
+//        if (getCurrentURLLoginPage().contains("/login-submit"))
+//        {
+//            return (T) new page.LinkedinSubmitLoginPage(webDriver);
+//        }
+//        else
+//        {
+//            return (T) this;
+//        }
+    }
+

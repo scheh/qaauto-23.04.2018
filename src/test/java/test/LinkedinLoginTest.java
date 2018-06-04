@@ -1,24 +1,14 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+package test;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import page.LinkedinHomePage;
+import page.LinkedinLoginPage;
+import page.LinkedinSubmitLoginPage;
 
-import static java.lang.Thread.sleep;
-
-public class LinkedinLoginTest
+public class LinkedinLoginTest extends LinkedinBaseTest
 {
-    WebDriver webDriver;
-
-    @BeforeMethod
-    public void before()
-    {
-        webDriver = new FirefoxDriver();
-        webDriver.manage().window().maximize();
-        webDriver.get("https://www.linkedin.com/");
-    }
 
     @DataProvider
     public Object[][] validDataProvider()
@@ -79,9 +69,8 @@ public class LinkedinLoginTest
 
 
     @Test(dataProvider = "validDataProvider")
-    public void successfulLoginTest(String email, String password) throws InterruptedException
+    public void successfulLoginTest(String email, String password)
     {
-        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
 
         Assert.assertTrue(linkedinLoginPage.isEmailFieldDisplayed(),
                 "Email field is not displayed");
@@ -89,8 +78,8 @@ public class LinkedinLoginTest
         Assert.assertTrue(linkedinLoginPage.isPasswordFieldDisplayed(),
                 "Password field is absent");
 
-        Assert.assertTrue(linkedinLoginPage.isSignInButtonDisplayed(),
-                "Sign in button is absent");
+        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),
+                "Login-Submit page is not loaded");
 
         Assert.assertEquals(linkedinLoginPage.getCurrentURLLoginPage(),
                 "https://www.linkedin.com/",
@@ -102,8 +91,6 @@ public class LinkedinLoginTest
 
 
         LinkedinHomePage linkedinHomePage = linkedinLoginPage.login(email, password);
-
-        sleep(2000);
 
         Assert.assertEquals(linkedinHomePage.getCurrentURLHomePage(),
                 "https://www.linkedin.com/feed/",
@@ -133,10 +120,10 @@ public class LinkedinLoginTest
 
     }
 
+
     @Test(dataProvider = "invalidIncorrectEmailDataProvider")
-    public void negativeLoginTestIncorrectLogin(String email, String password) throws InterruptedException
+    public void negativeLoginTestIncorrectLogin(String email, String password)
     {
-        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
 
         Assert.assertTrue(linkedinLoginPage.isEmailFieldDisplayed(),
                 "Email field is absent");
@@ -144,12 +131,10 @@ public class LinkedinLoginTest
         Assert.assertTrue(linkedinLoginPage.isPasswordFieldDisplayed(),
                 "Password field is absent");
 
-        Assert.assertTrue(linkedinLoginPage.isSignInButtonDisplayed(),
-                "Sign is button is absent");
+        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),
+                "Login-Submit page is not loaded");
 
         LinkedinSubmitLoginPage linkedinSubmitLoginPage = linkedinLoginPage.submitPageLogin(email,password);
-
-        sleep(3000);
 
         Assert.assertTrue(linkedinSubmitLoginPage.errorBlockSubmitPage(),
                 "Error block is absent");
@@ -178,13 +163,11 @@ public class LinkedinLoginTest
     }
 
     @Test(dataProvider = "invalidUnregisteredEmailDataProvider")
-    public void negativeLoginTestInvalidLogin(String email, String password) throws InterruptedException
+    public void negativeLoginTestInvalidLogin(String email, String password)
     {
-        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
 
         LinkedinSubmitLoginPage linkedinSubmitLoginPage = linkedinLoginPage.submitPageLogin(email,password);
 
-        sleep(2000);
 
         Assert.assertTrue(linkedinSubmitLoginPage.errorBlockSubmitPage(),
                 "Error message block is absent");
@@ -213,13 +196,11 @@ public class LinkedinLoginTest
     }
 
     @Test(dataProvider = "invalidUnregisteredEmailDataProvider")
-    public void negativeLoginTestNonRegisteredEmail(String email, String password) throws InterruptedException
+    public void negativeLoginTestNonRegisteredEmail(String email, String password)
     {
-        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
 
         LinkedinSubmitLoginPage linkedinSubmitLoginPage = linkedinLoginPage.submitPageLogin(email,password);
 
-        sleep(3000);
 
         Assert.assertTrue(linkedinSubmitLoginPage.errorBlockSubmitPage(),
                 "Error message block is absent");
@@ -247,11 +228,10 @@ public class LinkedinLoginTest
     }
 
     @Test(dataProvider = "invalidPasswordDataProvider")
-    public void negativeLoginTestIncorrectPassword(String email, String password) throws InterruptedException
+    public void negativeLoginTestIncorrectPassword(String email, String password)
     {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
 
-        sleep(2000);
 
         LinkedinSubmitLoginPage linkedinSubmitLoginPage = linkedinLoginPage.submitPageLogin(email,password);
 
@@ -296,16 +276,10 @@ public class LinkedinLoginTest
         Assert.assertTrue(linkedinLoginPage.isPasswordFieldDisplayed(),
                 "Password field is absent");
 
-        Assert.assertTrue(linkedinLoginPage.isSignInButtonDisplayed(),
-                "Sign is button is absent");
+        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),
+                "Login-Submit page is not loaded");
 
     }
 
-
-    @AfterMethod
-    public void after()
-    {
-        webDriver.close();
-    }
 
 }
