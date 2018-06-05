@@ -5,8 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LinkedinLoginPage extends LinkedinBasePage
-{
+public class LinkedinLoginPage extends LinkedinBasePage {
     @FindBy(id = "login-email")
     private WebElement emailField;
 
@@ -20,20 +19,17 @@ public class LinkedinLoginPage extends LinkedinBasePage
     private WebElement forgotPasswordLink;
 
 
-    public LinkedinLoginPage(WebDriver webDriver)
-    {
+    public LinkedinLoginPage(WebDriver webDriver) {
         super(webDriver);
         PageFactory.initElements(webDriver, this);
     }
 
     @Override
-    public boolean isPageLoaded()
-    {
+    public boolean isPageLoaded() {
         return signInButton.isDisplayed();
     }
 
-    public LinkedinHomePage login(String email, String password)
-    {
+    public LinkedinHomePage login(String email, String password) {
         emailField.sendKeys(email);
         passwordField.sendKeys(password);
         signInButton.click();
@@ -41,58 +37,51 @@ public class LinkedinLoginPage extends LinkedinBasePage
         //return new page.LinkedinHomePage(webDriver);
     }
 
-    public LinkedinSubmitLoginPage submitPageLogin(String email, String password)
-    {
+    public LinkedinSubmitLoginPage submitPageLogin(String email, String password) {
         emailField.sendKeys(email);
         passwordField.sendKeys(password);
         signInButton.click();
         return PageFactory.initElements(webDriver, LinkedinSubmitLoginPage.class);
     }
 
-    public LinkedinRequestPasswordResetPage clickOnForgotPasswordLink()
-    {
+    public LinkedinRequestPasswordResetPage clickOnForgotPasswordLink() {
         forgotPasswordLink.click();
         return PageFactory.initElements(webDriver, LinkedinRequestPasswordResetPage.class);
     }
 
 
-    public boolean isEmailFieldDisplayed()
-    {
+    public boolean isEmailFieldDisplayed() {
         return emailField.isDisplayed();
     }
 
-    public boolean isPasswordFieldDisplayed()
-    {
+    public boolean isPasswordFieldDisplayed() {
         return passwordField.isDisplayed();
     }
 
-    public String getCurrentURLLoginPage()
-    {
+    public String getCurrentURLLoginPage() {
         return webDriver.getCurrentUrl();
     }
 
-    public String getCurrentTitleLoginPage()
-    {
+    public String getCurrentTitleLoginPage() {
         return webDriver.getCurrentUrl();
     }
 
 
-//    public <T> T login(String email, String password)
-//    {
-//        emailField.sendKeys(email);
-//        passwordField.sendKeys((password));
-//        signInButton.click();
-//        if (getCurrentURLLoginPage().contains("/feed"))
-//        {
-//            return (T) new page.LinkedinHomePage(webDriver);
-//        }
-//        if (getCurrentURLLoginPage().contains("/login-submit"))
-//        {
-//            return (T) new page.LinkedinSubmitLoginPage(webDriver);
-//        }
-//        else
-//        {
-//            return (T) this;
-//        }
-    }
+/* How return one of three pages.
 
+    public <T> T login(String email, String password) {
+        emailField.sendKeys(email);
+        passwordField.sendKeys((password));
+        signInButton.click();
+        if (getCurrentURLLoginPage().contains("/feed")) {
+            return (T) new page.LinkedinHomePage(webDriver);
+        }
+        if (getCurrentURLLoginPage().contains("/login-submit")) {
+            return (T) new page.LinkedinSubmitLoginPage(webDriver);
+        } else {
+            return (T) this;
+        }
+    }
+*/
+
+}

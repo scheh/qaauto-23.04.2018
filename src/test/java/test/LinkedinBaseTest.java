@@ -1,7 +1,8 @@
 package test;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import page.LinkedinLoginPage;
@@ -18,7 +19,8 @@ public class LinkedinBaseTest
     @BeforeMethod
     public void before() throws InterruptedException
     {
-        webDriver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        webDriver = new ChromeDriver();
         webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         webDriver.manage().window().maximize();
         webDriver.get("https://www.linkedin.com/");
