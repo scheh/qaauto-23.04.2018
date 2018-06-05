@@ -37,12 +37,7 @@ public class LinkedinSetNewPasswordPage extends LinkedinBasePage
 
     public boolean isDisplayed()
     {
-        return confirmPasswordField.isDisplayed();
-    }
-
-    public boolean isResetPasswordSubmitButtonDisplayed()
-    {
-        return resetPasswordSubmitButton.isDisplayed();
+        return confirmPasswordField.isDisplayed() && resetPasswordSubmitButton.isDisplayed();
     }
 
     public LinkedinSuccessfulPasswordResetPage submitNewPassword()

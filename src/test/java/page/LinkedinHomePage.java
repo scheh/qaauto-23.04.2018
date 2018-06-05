@@ -1,8 +1,10 @@
 package page;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class LinkedinHomePage extends LinkedinBasePage
 {
@@ -21,7 +23,7 @@ public class LinkedinHomePage extends LinkedinBasePage
     @FindBy(id = "notifications-tab-icon")
     private WebElement notificationsIcon;
 
-    @FindBy(id = "nav-search-controls-wormhole")
+    @FindBy(xpath = "//input[@placeholder='Search']")
     private WebElement searchField;
 
     @FindBy(xpath = "//li[@id='profile-nav-item']" )
@@ -77,6 +79,13 @@ public class LinkedinHomePage extends LinkedinBasePage
     public boolean isSearchFieldisPresent()
     {
         return searchField.isDisplayed();
+    }
+
+    public LinkedinSearchResults search(String searchTerm)
+    {
+        searchField.sendKeys(searchTerm);
+        searchField.sendKeys(Keys.RETURN);
+        return PageFactory.initElements(webDriver, LinkedinSearchResults.class);
     }
 
 }

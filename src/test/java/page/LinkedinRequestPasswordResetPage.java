@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import util.GMailService;
 
 public class LinkedinRequestPasswordResetPage extends LinkedinBasePage
 {
@@ -24,17 +23,16 @@ public class LinkedinRequestPasswordResetPage extends LinkedinBasePage
 
     public boolean isPageLoaded()
     {
-        return setEmailField.isDisplayed();
+        return setEmailField.isDisplayed() && resetPasswordButton.isDisplayed();
     }
 
-    public boolean isresendButtonDisplayed()
-    {
-        return resetPasswordButton.isDisplayed();
-    }
+//    public boolean isresendButtonDisplayed()
+//    {
+//        return resetPasswordButton.isDisplayed();
+//    }
 
     public LinkedinRequestPasswordResetSubmitPage submitUserEmail()
     {
-        GMailService gMailService = new GMailService();
         gMailService.connect();
         setEmailField.sendKeys("scheh@adyax.com");
         resetPasswordButton.click();

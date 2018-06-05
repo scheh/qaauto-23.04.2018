@@ -6,6 +6,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import page.LinkedinLoginPage;
 
+import java.util.concurrent.TimeUnit;
+
 import static java.lang.Thread.sleep;
 
 public class LinkedinBaseTest
@@ -14,9 +16,10 @@ public class LinkedinBaseTest
     LinkedinLoginPage linkedinLoginPage;
 
     @BeforeMethod
-    public void before() throws InterruptedException {
+    public void before() throws InterruptedException
+    {
         webDriver = new FirefoxDriver();
-    //  webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         webDriver.manage().window().maximize();
         webDriver.get("https://www.linkedin.com/");
         linkedinLoginPage = new LinkedinLoginPage(webDriver);
