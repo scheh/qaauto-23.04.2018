@@ -10,7 +10,7 @@ import page.LinkedinSubmitLoginPage;
 /**
  * Class for login test
  */
-public class LinkedinLoginTest_rus extends LinkedinBaseTest_rus
+public class LinkedinLoginTest_rus extends LinkedinBaseTest
 {
 
     @DataProvider

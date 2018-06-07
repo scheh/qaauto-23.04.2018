@@ -8,7 +8,7 @@ import page.LinkedinLoginPage;
 import page.LinkedinSubmitLoginPage;
 
 /**
- * Class for login test
+ * Class for login test with extend to LinkedinBaseTest class
  */
 public class LinkedinLoginTest extends LinkedinBaseTest
 {
@@ -18,8 +18,8 @@ public class LinkedinLoginTest extends LinkedinBaseTest
     {
         return new Object[][]
         {
-                { "scheh@adyax.com", "Password0123" },
-                { "SCHEH@ADYAX.COM", "Password0123" },
+                { "scheh@adyax.com", "Password123" },
+                { "SCHEH@ADYAX.COM", "Password123" },
 
         };
     }
@@ -124,7 +124,6 @@ public class LinkedinLoginTest extends LinkedinBaseTest
 
         Assert.assertTrue(linkedinHomePage.isSearchFieldisPresent(),
                 "Search field is not displayed");
-
 
     }
 

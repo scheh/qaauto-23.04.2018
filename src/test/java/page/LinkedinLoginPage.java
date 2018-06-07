@@ -110,9 +110,19 @@ public class LinkedinLoginPage extends LinkedinBasePage {
     }
 
 
-/* How return one of three pages.
 
-    public <T> T login(String email, String password) {
+//How return one of three pages.
+
+    /**
+     * @param email
+     * @param password
+     * @param <T>
+     *
+     * @return One of the three pages depending on the method will be done
+     */
+
+    /*public <T> T login(String email, String password)
+    {
         emailField.sendKeys(email);
         passwordField.sendKeys((password));
         signInButton.click();
@@ -124,7 +134,6 @@ public class LinkedinLoginPage extends LinkedinBasePage {
         } else {
             return (T) this;
         }
-    }
-*/
+    }*/
 
 }

@@ -14,7 +14,7 @@ import page.LinkedinLoginPage;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Class for Base test
+ * Class for Base test with english localization
  */
 public class LinkedinBaseTest
 {
@@ -25,7 +25,7 @@ public class LinkedinBaseTest
     @BeforeMethod
 
     public void beforeTest(@Optional("chrome") String browserType,
-                           @Optional("https://ua.linkedin.com/")String envURL)
+                           @Optional("https://linkedin.com/")String envURL)
     {
         switch (browserType.toLowerCase())
         {
@@ -47,8 +47,8 @@ public class LinkedinBaseTest
                 webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                 webDriver.manage().window().maximize();
         }
-        webDriver.navigate().to(envURL);
-        linkedinLoginPage = new LinkedinLoginPage(webDriver);
+                webDriver.navigate().to(envURL);
+                linkedinLoginPage = new LinkedinLoginPage(webDriver);
 
     }
 
