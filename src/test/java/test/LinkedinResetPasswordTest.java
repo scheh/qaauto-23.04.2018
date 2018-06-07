@@ -6,6 +6,9 @@ import page.*;
 
 public class LinkedinResetPasswordTest extends LinkedinBaseTest
 {
+    /**
+     * Test for password reset
+     */
     @Test
     public void successfulPasswordResetTest()
     {

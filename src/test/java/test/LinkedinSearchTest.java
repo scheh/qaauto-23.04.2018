@@ -9,6 +9,10 @@ import java.util.List;
 
 public class LinkedinSearchTest extends LinkedinBaseTest
 {
+
+    /**
+     * Test searching for results after the search field filling
+     */
     @Test
     public void basicSearchTest()
     {

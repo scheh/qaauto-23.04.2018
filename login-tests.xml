@@ -2,10 +2,35 @@
 
 <suite name="Linkedin">
 
-    <test name="Login Tests">
+    <test name="Login test Chrome_eng">
+        <parameter name="browserType" value="Chrome"/>
+        <parameter name="envURL" value="https://www.linkedin.com/" />
         <classes>
             <class name="test.LinkedinLoginTest" />
+            <class name="test.LinkedinLoginTest_ua" />
+            <class name="test.LinkedinLoginTest_rus" />
+        </classes>
+    </test>
+
+    <test name="Login test Firefox_eng">
+        <parameter name="browserType" value="FireFox"/>
+        <parameter name="envURL" value="https://www.linkedin.com/" />
+        <classes>
+            <class name="test.LinkedinLoginTest" />
+            <class name="test.LinkedinBaseTest_ua" />
+            <class name="test.LinkedinBaseTest_rus" />
+        </classes>
+    </test>
+
+    <test name="Login test ie_eng">
+        <parameter name="browserType" value="ie"/>
+        <parameter name="envURL" value="https://www.linkedin.com/" />
+        <classes>
+            <class name="test.LinkedinLoginTest" />
+            <class name="test.LinkedinBaseTest_ua" />
+            <class name="test.LinkedinBaseTest_rus"/>
         </classes>
     </test>
 
 </suite>
+

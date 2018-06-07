@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Class for Base test
  */
-public class LinkedinBaseTest
+public class LinkedinBaseTest_ua
 {
     WebDriver webDriver;
     LinkedinLoginPage linkedinLoginPage;

@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Class for Base test
  */
-public class LinkedinBaseTest
+public class LinkedinBaseTest_rus
 {
     WebDriver webDriver;
     LinkedinLoginPage linkedinLoginPage;
@@ -25,7 +25,7 @@ public class LinkedinBaseTest
     @BeforeMethod
 
     public void beforeTest(@Optional("chrome") String browserType,
-                           @Optional("https://ua.linkedin.com/")String envURL)
+                           @Optional("https://ru.linkedin.com/")String envURL)
     {
         switch (browserType.toLowerCase())
         {

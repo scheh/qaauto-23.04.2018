@@ -1,8 +1,26 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Linkedin">
+<suite name="Linkedin search">
 
-    <test name="Search Tests">
+    <test name="Search Tests Chrome">
+        <parameter name="browserType" value="Chrome"/>
+        <parameter name="envURL" value="https://www.linkedin.com/" />
+        <classes>
+            <class name="test.LinkedinSearchTest" />
+        </classes>
+    </test>
+
+    <test name="Search Tests Firefox">
+        <parameter name="browserType" value="Firefox"/>
+        <parameter name="envURL" value="https://www.linkedin.com/" />
+        <classes>
+            <class name="test.LinkedinSearchTest" />
+        </classes>
+    </test>
+
+    <test name="Search Tests ie">
+        <parameter name="browserType" value="ie"/>
+        <parameter name="envURL" value="https://www.linkedin.com/" />
         <classes>
             <class name="test.LinkedinSearchTest" />
         </classes>
